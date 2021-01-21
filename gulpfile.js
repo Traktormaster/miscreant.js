@@ -8,7 +8,7 @@ var tsProject = ts.createProject("tsconfig.json");
 
 gulp.task("default", function() {
     var tsResult = gulp
-        .src(["./src/**/*.ts", "index.ts"])
+        .src(["./src/**/*.ts"])
         .pipe(tsProject());
 
     return tsResult.js
@@ -16,7 +16,7 @@ gulp.task("default", function() {
         .pipe(gulp.dest("release"));
 });
 
-gulp.task("webpack", ["default"], function() {
+gulp.task("webpack", gulp.series("default"), function() {
     gulp.src("./release/index.js")
         .pipe(webpack(webpackConfig))
         .pipe(gulp.dest("bundle"));
